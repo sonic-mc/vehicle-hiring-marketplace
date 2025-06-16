@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Vehicle Hire')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -93,15 +94,62 @@
 <body>
 
     <div class="sidebar">
-        <h2>HireZone</h2>
+        <h2>🚗 Vehicle Hire</h2>
         <nav>
-            <a href="{{ route('vehicles.index') }}">Browse Vehicles</a>
+            {{-- General Menus (All Users) --}}
+            <a href="#">🏠 Home</a>
+            <a href="#">🔍 Search Vehicles</a>
+            <a href="#">📍 Browse by Location</a>
+            <a href="#">🚘 Vehicle Types</a>
+            <a href="#">📖 FAQs </a>
+            <a href="#">📞 Contact / Support</a>
+            <a href="#">🌍 About Us</a>
+    
+            {{-- Logged-In Hirer Menus --}}
             @auth
-                <a href="{{ route('vehicles.create') }}">Post Vehicle</a>
-                <a href="#">My Listings</a>
+                @if(auth()->user()->role === 'hirer')
+                    <hr>
+                    <strong>👤 Hirer</strong>
+                    <a href="#">📅 My Bookings</a>
+                    <a href="#">❤️ Saved Vehicles</a>
+                    <a href="#">💳 Payment History</a>
+                    <a href="#">🔔 Notifications</a>
+                    <a href="#">✉️ Messages</a>
+                    <a href="#">📝 My Reviews</a>
+                    <a href="#">👤 Profile Settings</a>
+                @endif
+    
+                {{-- Vehicle Owner Menus --}}
+                @if(auth()->user()->role === 'owner')
+                    <hr>
+                    <strong>🚗 Vehicle Owner</strong>
+                    <a href="{{ route('vehicles.create') }}">📤 Post a Vehicle</a>
+                    <a href="{{ route('vehicles.my') }}">🚗 My Vehicles</a>
+                    <a href="{{ route('bookings.requests') }}">📥 Booking Requests</a>
+                    <a href="{{ route('availability.schedule') }}">📆 Availability Schedule</a>
+                    <a href="{{ route('reviews.received') }}">⭐ Ratings & Reviews</a>
+                    <a href="{{ route('earnings') }}">💰 My Earnings</a>
+                    <a href="{{ route('verification.status') }}">🛡️ Verification Status</a>
+                    <a href="{{ route('profile.settings') }}">👤 Profile Settings</a>
+                @endif
+    
+                {{-- Admin Menus --}}
+                @if(auth()->user()->role === 'admin')
+                    <hr>
+                    <strong>⚙️ Admin Panel</strong>
+                    <a href="{{ route('admin.users') }}">👥 Manage Users</a>
+                    <a href="{{ route('admin.vehicles') }}">🚐 Manage Vehicles</a>
+                    <a href="{{ route('admin.analytics') }}">📊 Booking Analytics</a>
+                    <a href="{{ route('admin.payouts') }}">💸 Payout Requests</a>
+                    <a href="{{ route('admin.verifications') }}">📝 Vehicle Verifications</a>
+                    <a href="{{ route('admin.flags') }}">🚩 Flagged Content</a>
+                    <a href="{{ route('admin.audits') }}">📚 Audit Logs</a>
+                    <a href="{{ route('admin.settings') }}">⚙️ Site Settings</a>
+                @endif
             @endauth
         </nav>
     </div>
+    
 
     <div class="main">
         <div class="topbar">
