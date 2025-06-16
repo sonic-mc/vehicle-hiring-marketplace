@@ -97,7 +97,7 @@
         <h2>🚗 Vehicle Hire</h2>
         <nav>
             {{-- General Menus (All Users) --}}
-            <a href="#">🏠 Home</a>
+            <a href="{{ route('vehicles.index') }}">🏠 Home</a>
             <a href="#">🔍 Search Vehicles</a>
             <a href="#">📍 Browse by Location</a>
             <a href="#">🚘 Vehicle Types</a>
