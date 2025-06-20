@@ -15,6 +15,7 @@
             background-color: #f5f5f5;
         }
 
+                /* Base styles */
         .sidebar {
             width: 220px;
             background-color: #333;
@@ -22,6 +23,8 @@
             flex-shrink: 0;
             height: 100vh;
             position: fixed;
+            transition: transform 0.3s ease;
+            z-index: 1000;
         }
 
         .sidebar h2 {
@@ -50,6 +53,39 @@
             color: #fff;
         }
 
+        /* Mobile hidden state */
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        /* Toggle button */
+        .toggle-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 1100;
+            display: none; /* hidden by default */
+        }
+
+        /* Show toggle button on small screens */
+        @media (max-width: 768px) {
+            .toggle-btn {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
         .main {
             margin-left: 220px;
             width: 100%;
@@ -94,6 +130,7 @@
 <body>
 
     <div class="sidebar">
+
         <h2>🚗 Vehicle Hire</h2>
         <nav>
             {{-- General Menus (All Users) --}}
@@ -150,7 +187,7 @@
         </nav>
     </div>
     
-
+    <button class="toggle-btn" onclick="toggleSidebar()">☰ Menu</button>
     <div class="main">
         <div class="topbar">
             <h1>@yield('page_title', '')</h1>
@@ -174,4 +211,12 @@
     </div>
 
 </body>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('open');
+    }
+</script>
+
 </html>
