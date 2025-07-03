@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\SlackAlert;
+
+
 
 class VehicleController extends Controller
 {
+
+    public function notifySlack()
+    {
+        Notification::route('slack', config('services.slack.webhook_url'))
+            ->notify(new SlackAlert('🔥 Action required! Something happened.'));
+
+        return response()->json(['message' => 'Slack notification sent']);
+    }
+
       public function index()
     {
         $vehicles = Vehicle::latest()->get(); // Or paginate if needed
